@@ -12,14 +12,15 @@
 
 ## Installation instructions
 
-- Create `mongodb_root_password` file in **./docker/shared/secrets/**
+1. Create `mongodb_root_password` file in **./docker/shared/secrets/**.
 
-E.g.: `$ echo "S3cR3TPassword" >> docker/shared/secrets/mongodb_root_password`
+    E.g.: `$ echo "S3cR3TPassword" >> docker/shared/secrets/mongodb_root_password`
+2. `docker-compose up`
+3. Done! You can access: http://127.0.0.1:8080/data?week_start=2016-08-10&week_end=2017-08-20
 
-- Configure port, user id, group id in **.env** if needed
-- Put new ***.xlsx** files under `./parser/xlsx` folder if needed
-- `docker-compose up`
-- Done! You can access: http://127.0.0.1:8080/data?week_start=2016-08-10&week_end=2017-08-20
+Note: 
+* Put new ***.xlsx** files under `./parser/xlsx` folder
+* Configure port in **.env** if needed
 
 ### Docker contents
 
