@@ -39,7 +39,7 @@ def mongo_database():
 def test_mongo_database():
     database = mongo_database()
 
-    assert database.name == 'parsed'
+    assert database.name == os.getenv('MONGO_INITDB_DATABASE')
     assert isinstance(database.client, MongoClient)
 
 
