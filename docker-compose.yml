@@ -1,0 +1,99 @@
+version: '3.4'
+
+secrets:
+  mongodb_root_password:
+    file: ${MONGODB_LOCAL_ROOT_PASSWORD_FILE}
+
+networks:
+  mongodb:
+    driver: bridge
+  uwsgi:
+    driver: bridge
+
+services:
+  parser:
+    build:
+      context: ./docker/parser
+      args:
+        - TIMEZONE=${TIMEZONE}
+        - PUID=${PUID}
+        - PGID=${PGID}
+        - PYTHON_VERSION=${PYTHON_VERSION}
+    volumes:
+      - ./parser/:/var/parser/
+    environment:
+      - MONGO_INITDB_DATABASE
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongodb_root_password
+    secrets:
+      - mongodb_root_password
+    networks:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      args:
+        - PUID=${PUID}
+        - PGID=${PGID}
+    restart: on-failure
+    volumes:
+      - ./api/:/var/www/api/
+      - ./docker/nginx/configs/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/configs/sites/:/etc/nginx/sites-available/
+      - ./docker/shared/data/logs/nginx/:/var/log/nginx/
+      - ./docker/shared/data/uwsgi/uwsgi.socket:/tmp/uwsgi.socket
+    ports:
+      - "${HTTP_PORT}:8080"
+    networks:
+      - uwsgi
+    depends_on:
+      - uwsgi
+
+  uwsgi:
+    build:
+      context: ./docker/uwsgi
+      args:
+        - TIMEZONE=${TIMEZONE}
+        - PUID=${PUID}
+        - PGID=${PGID}
+        - PYTHON_VERSION=${PYTHON_VERSION}
+    restart: on-failure
+    volumes:
+      - ./api/:/var/www/api/
+      - ./docker/uwsgi/configs/uwsgi.ini:/etc/uwsgi/uwsgi.ini
+      - ./docker/shared/data/uwsgi:/tmp
+    environment:
+      - MONGO_INITDB_DATABASE
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongodb_root_password
+    secrets:
+      - mongodb_root_password
+    networks:
+      - uwsgi
+      - mongodb
+    depends_on:
+      - mongodb
+
+  mongodb:
+    build:
+      context: ./docker/mongodb
+      args:
+        - TIMEZONE=${TIMEZONE}
+        - PUID=${PUID}
+        - PGID=${PGID}
+        - MONGODB_VERSION=${MONGODB_VERSION}
+    restart: on-failure
+    volumes:
+      - ${MONGODB_LOCAL_DATA_PATH}:/data/db
+      - ./docker/shared/data/logs/mongodb:/var/log/mongodb
+    environment:
+      - MONGO_INITDB_DATABASE
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongodb_root_password
+    secrets:
+      - mongodb_root_password
+    networks:
+      - mongodb
