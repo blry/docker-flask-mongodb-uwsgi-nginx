@@ -1,16 +1,16 @@
 # docker-flask-mongodb-uwsgi-nginx
 
 [![Author](https://img.shields.io/badge/author-alexander.sterpu%40gmail.com-blue.svg)](https://github.com/blry)
+[![Nginx stable](https://img.shields.io/badge/author-alexander.sterpu%40gmail.com-blue.svg)](https://github.com/blry)
 
 ## Description
 
-### Task
+docker-flask-mongodb-uwsgi-nginx - is a Flask project with a whole Docker stack on a set of components listed below.
 
-- To write a program which will extract data from Excel files.
-- Please write a second program that will start an API web-service on port 8080 (use flask) that will return the stored data.
-- All services should be running in Docker.
+- To extract data from provided Excel files.
+- To start an API web-service on port 8080 (use flask) that will return the stored data.
 
-## Installation instructions
+## Installation
 
 1. Create `mongodb_root_password` file in **./docker/shared/secrets/**.
 
@@ -20,17 +20,17 @@
 
 Note: 
 * Put new ***.xlsx** files under `./parser/xlsx` folder
-* Configure port in **.env** if needed
+* Configure **.env** if needed
 
 ### Docker contents
 
-- [Nginx](https://hub.docker.com/_/nginx)
-- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
 - [Flask](https://palletsprojects.com/p/flask/)
 - [MongoDB](https://hub.docker.com/_/mongo)
+- [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
+- [Nginx](https://hub.docker.com/_/nginx)
 - [OpenPyXL](https://openpyxl.readthedocs.io/en/stable/)
 
-## Result:
+## A simple example
 [![Author](https://i.imgur.com/V3DoFdk.png)](https://github.com/blry)
 
 ## Contributing

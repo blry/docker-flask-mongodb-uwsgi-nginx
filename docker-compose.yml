@@ -44,7 +44,7 @@ services:
       - ./docker/nginx/configs/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/configs/sites/:/etc/nginx/sites-available/
       - ./docker/shared/data/logs/nginx/:/var/log/nginx/
-      - ./docker/shared/data/uwsgi/uwsgi.socket:/tmp/uwsgi.socket
+      - ./docker/shared/data/uwsgi:/uwsgi
     ports:
       - "${HTTP_PORT}:8080"
     networks:
