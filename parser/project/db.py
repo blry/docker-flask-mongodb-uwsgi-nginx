@@ -1,5 +1,5 @@
 import os
-from pymongo import MongoClient, collection
+from pymongo import DESCENDING, MongoClient, collection
 
 
 def working_collections():
@@ -9,6 +9,8 @@ def working_collections():
 
     mongodb_db_name = os.getenv('MONGO_INITDB_DATABASE')
     db = client[mongodb_db_name]
+
+    db.parsed_records.create_index([ ('week_start', DESCENDING), ('week_end', DESCENDING) ])
 
     return db.parsed_file_hashes, db.parsed_records
 

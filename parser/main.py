@@ -5,6 +5,7 @@ from project import utils, db
 def main():
     parsed_files_col, parsed_records_col = db.working_collections()
     parsed_files = list(parsed_files_col.find())
+
     all_files = utils.all_files('xlsx')
     print('Found %d files in xlsx dir:' % len(all_files))
 
