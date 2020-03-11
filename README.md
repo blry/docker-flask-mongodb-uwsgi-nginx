@@ -31,7 +31,7 @@ Note:
 - [OpenPyXL](https://openpyxl.readthedocs.io/en/stable/)
 
 ## A simple example
-[![Author](https://i.imgur.com/V3DoFdk.png)](https://github.com/blry)
+[![asciicast](https://asciinema.org/a/tt8zUH86BWEi9g5AIq7YwKJG0.svg)](https://asciinema.org/a/tt8zUH86BWEi9g5AIq7YwKJG0)
 
 ## Contributing
 
