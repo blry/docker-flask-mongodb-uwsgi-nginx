@@ -28,7 +28,7 @@ ARG PGID='1000'
 RUN usermod -u ${PUID} www-data && \
     groupmod -g ${PGID} www-data && \
     mkdir -p /var/www/api && \
-    chown -R www-data:www-data /tmp /var/www
+    chown -R www-data:www-data /var/www
 
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh
@@ -38,5 +38,7 @@ RUN chmod +x /usr/local/bin/run.sh
 USER www-data
 
 WORKDIR /var/www/api
+
+EXPOSE 3031
 
 CMD ["run.sh"]

@@ -44,7 +44,6 @@ services:
       - ./docker/nginx/configs/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/configs/sites/:/etc/nginx/sites-available/
       - ./docker/shared/data/logs/nginx/:/var/log/nginx/
-      - ./docker/shared/data/uwsgi:/uwsgi
     ports:
       - "${HTTP_PORT}:8080"
     networks:
@@ -64,7 +63,6 @@ services:
     volumes:
       - ./api/:/var/www/api/
       - ./docker/uwsgi/configs/uwsgi.ini:/etc/uwsgi/uwsgi.ini
-      - ./docker/shared/data/uwsgi:/tmp
     environment:
       - MONGO_INITDB_DATABASE
       - MONGO_INITDB_ROOT_USERNAME
